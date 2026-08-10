@@ -79,11 +79,12 @@ android {
 
     namespace "com.tlconnectapp"
     defaultConfig {
-        applicationId "com.tlconnectapp"
+        // applicationId "com.tlconnectapp"
+        applicationId "com.tolong.mall"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.1"
     }
     signingConfigs {
         debug {

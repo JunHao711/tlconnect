@@ -1,17 +1,20 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
   BackHandler,
   Linking,
   StatusBar,
+  ActivityIndicator,
+  View,
 } from 'react-native';
 import WebView from 'react-native-webview';
 
-const JOOMLA_URL = 'https://marketplace.tlconnect.satumalaysiahosting.com';
+const JOOMLA_URL = 'https://mall.tolong.com.my/';
 
 const App = () => {
   const webViewRef = useRef<any>(null);
+  const [loading, setLoading] = useState(false);
 
   // Android返回键 — 在WebView里goBack而不是退出app
   React.useEffect(() => {
@@ -57,6 +60,7 @@ const App = () => {
 
   // 监听navigation — 处理支付redirect等
   const handleNavigationStateChange = (navState: any) => {
+    setLoading(navState.loading);
     console.log('Navigating to:', navState.url);
   };
 
@@ -89,6 +93,12 @@ const App = () => {
             console.log('WebView HTTP error:', nativeEvent.statusCode);
           }}
       />
+      {/* Spinner overlay — shows when loading */}
+      {loading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color="#1a73e8" />
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -101,6 +111,15 @@ const styles = StyleSheet.create({
   webview: {
     flex: 1,
   },
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+  },
 });
-
 export default App;
